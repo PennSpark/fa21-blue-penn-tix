@@ -1,5 +1,10 @@
 # PennTix
-To run: ```python manage.py runserver```
+To run: 
+```
+Activate the virtual environment: .\venv\Scripts\activate
+python manage.py runserver
+Deactivate the virtual environment: deactivate
+```
 
 Admin login: admin1, password
 
