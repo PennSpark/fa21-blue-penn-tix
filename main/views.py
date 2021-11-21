@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from main.models import Event, Ticket
 from django.http import HttpResponse
 from .forms import NewTicketForm
-from datetime import datetime
 
 
 def sell_view(request):
@@ -17,16 +16,14 @@ def sell_view(request):
             try:
                 event = Event.objects.get(
                     name=form.cleaned_data["event_name"],
-                    date=datetime.combine(
-                        form.cleaned_data["event_date"], form.cleaned_data["event_time"]
-                    ),
+                    date=form.cleaned_data["event_date"],
+                    time=form.cleaned_data["event_time"],
                 )
             except Event.DoesNotExist:
                 event = Event()
                 event.name = form.cleaned_data["event_name"]
-                event.date = datetime.combine(
-                    form.cleaned_data["event_date"], form.cleaned_data["event_time"]
-                )
+                event.date = (form.cleaned_data["event_date"],)
+                event.time = (form.cleaned_data["event_time"],)
                 event.save()
 
             new_ticket = Ticket()
@@ -35,6 +32,7 @@ def sell_view(request):
             new_ticket.quantity = form.cleaned_data["quantity"]
             new_ticket.seller = request.user
             new_ticket.save()
+            ##TODO: add something here that gives confirmation your ticket has been posted
             return HttpResponseRedirect("/")
     else:
         form = NewTicketForm()
