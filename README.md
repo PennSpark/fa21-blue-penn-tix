@@ -1,9 +1,15 @@
 # PennTix
+Virtual Environment Stuff
+```
+Create: python -m venv venv
+Activate the virtual environment: .\venv\Scripts\activate
+Install requirements: pip install -r requirements.txt
+Deactivate the virtual environment: deactivate
+```
+
 To run: 
 ```
-Activate the virtual environment: .\venv\Scripts\activate
 python manage.py runserver
-Deactivate the virtual environment: deactivate
 ```
 
 Admin login: admin1, password
