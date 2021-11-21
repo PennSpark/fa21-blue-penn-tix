@@ -1,0 +1,12 @@
+<div class="main">
+
+    {% for ticket in tickets %}
+
+    Selling {{ ticket.quantity }} {{ ticket.event }} ticket(s)<br />
+    {{ticket.event.date}}<br />
+    ${{ ticket.price }}<br />
+    <hr />
+
+    {% endfor %}
+
+</div>

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Signed-In Homepage {% endblock %}
+
+{% block styles %} {% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav ml-auto"><a href="/logout"><button class="btn btn-light">Logout</button></a></ul>
+{% endblock %}
+
+{% block body %}
+
+<div class="intro-container">
+    <h1>Hello, {{ user.username }}!</h1>
+    <div class="actions-container">
+        <form action="/">
+            <input type="submit" class="btn btn-primary" value="Explore events" />
+        </form>
+        <form action="#">
+            <input type="submit" class="btn btn-primary active" aria-current="page" value="Sell tickets" />
+        </form>
+    </div>
+</div>
+
+<div class="form">
+    <h2 class="text-center text-muted">Sell tickets</h2>
+    <hr class="mb-4">
+    <form action="/sell/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-md-8 order-md-1">
+                    <h4 class="mb-4">Event Info</h4>
+                    <div class="mb-3">
+                        <label for="event_name">Event Name</label>
+                        <input type="text" class="form-control" id="event_name" name="event_name"
+                            placeholder="Enter event name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="event_date">Event Date</label>
+                        <input type="date" class="form-control" id="event_date" name="event_date">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="event_time">Event Time</label>
+                        <input type="time" class="form-control" id="event_time" name="event_time">
+                    </div>
+                </div>
+
+                <div class="col-md-4 order-md-2 mb-4">
+                    <h4 class="mb-4">Ticket Info</h4>
+                    <div class="mb-3">
+                        <label for="quantity">Quantity</label>
+                        <input type="text" class="form-control" id="quantity" name="quantity"
+                            placeholder="Enter quantity of tickets">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price">Price</label>
+                        <input type="text" class="form-control" id="price" name="price"
+                            placeholder="Enter selling price">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr class="mb-4">
+        <input type="submit" class="btn btn-primary active" value="Sell!" />
+    </form>
+</div>
+
+{% endblock %}

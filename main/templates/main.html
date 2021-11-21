@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} CITIVENTS {% endblock %}
+{% block title %} Signed-In Homepage {% endblock %}
 
 {% block styles %} {% endblock %}
 
@@ -11,36 +11,36 @@
 
 {% block body %}
 
-<h1>Hello, {{ user.username }}!</h1>
-
-<div class="input-group mb-3">
-  <form method="POST" action="/">
-    {% csrf_token %}
-    <input name="body" class="form-control" placeholder="What's on your mind?" />
-    <div class="input-group-append">
-      <input type="submit" class="btn btn-primary" value="Post tweet" />
-    </div>
-  </form>
+<div class="intro-container">
+  <h1>Hello, {{ user.username }}!</h1>
+  <div class="actions-container">
+    <form action="">
+      <input type="submit" class="btn btn-primary active" aria-current="page" value="Explore events" />
+    </form>
+    <form action="/sell">
+      <input type="submit" class="btn btn-primary" value="Sell tickets" />
+    </form>
+  </div>
 </div>
 
-<div>
-  {% for tweet in tweets %}
-  <div class="card border-dark mb-3" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">{{ tweet.author.username }}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ tweet.created_at }}</h6>
-      <p class="card-text">{{ tweet.body }}</p>
-      <a href="/like?id={{tweet.id}}" class="card-link">
-        {% if request.user in tweet.likes.all %}
-        Unlike
-        {% else %}
-        Like
-        {% endif %}
-      </a> ({{ tweet.likes.count }} &hearts;)
-      {% if tweet.author == user %}
-      <a href="delete?id={{tweet.id}}" class="card-link">Delete tweet</a>
-      {% endif %}
-    </div>
+{% regroup events by date as dates_list %}
+
+<div class="events-container">
+  <h2 class="text-center text-muted">Explore events</h2>
+  <hr class="mb-4">
+  {% for date in dates_list %}
+  <div class="list-group mb-4">
+    <h5>{{ date.grouper }}</h5>
+    {% for event in date.list %}
+    <a href="#" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ event.name }}</h5>
+        <small class="text-muted">Starting at $3</small>
+      </div>
+      <p class="mb-1">{{ event.date }}</p>
+      <small class="text-muted">{{ event.description }}</small>
+    </a>
+    {% endfor %}
   </div>
   {% endfor %}
 </div>

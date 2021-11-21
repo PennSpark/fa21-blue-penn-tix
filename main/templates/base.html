@@ -27,19 +27,19 @@
     <title>
         {% block title %}{% endblock %}
     </title>
-    <link rel="icon" type="image/svg" href="{% static 'css/twitter_white.svg' %}">
+    <link rel="icon" type="image/svg" href="{% static 'css/ticket.svg' %}">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0B5394">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">
-            <img src="{% static 'css/twitter_white.svg' %}" width="30" height="30" class="d-inline-block align-top"
-                alt="">
-            CITIVENTS
+            <img src="{% static 'css/ticket.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            Tickets
         </a>
         {% block navbar %}{% endblock %}
     </nav>
-    <div class="p-5">
+
+    <div class="container">
         {% block body %}{% endblock %}
     </div>
 </body>

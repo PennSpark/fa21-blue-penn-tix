@@ -1,3 +1,37 @@
 * {
-    font-family: 'Avenir', 'Roboto', sans-serif;
+  font-family: "Avenir", "Roboto", sans-serif;
+}
+
+.wrapper {
+  margin: auto;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.navbar {
+  min-height: 70px;
+}
+
+.navbar-brand {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  row-gap: 1rem;
+}
+
+.intro-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions-container {
+  display: flex;
+  column-gap: 0.25rem;
 }
