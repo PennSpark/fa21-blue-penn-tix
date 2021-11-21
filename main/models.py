@@ -6,8 +6,7 @@ class Event(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=300, blank=True)
     location = models.CharField(max_length=100, blank=True)
-    date = models.DateField()
-    time = models.TimeField()
+    date = models.DateTimeField()
     # TODO: add num_tickets
 
     def __str__(self):

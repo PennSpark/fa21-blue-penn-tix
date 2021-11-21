@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from main.models import Event, Ticket
 from django.http import HttpResponse
 from .forms import NewTicketForm
+from datetime import datetime
 
 
 def sell_view(request):
@@ -16,14 +17,16 @@ def sell_view(request):
             try:
                 event = Event.objects.get(
                     name=form.cleaned_data["event_name"],
-                    date=form.cleaned_data["event_date"],
-                    time=form.cleaned_data["event_time"],
+                    date=datetime.combine(
+                        form.cleaned_data["event_date"], form.cleaned_data["event_time"]
+                    ),
                 )
             except Event.DoesNotExist:
                 event = Event()
                 event.name = form.cleaned_data["event_name"]
-                event.date = (form.cleaned_data["event_date"],)
-                event.time = (form.cleaned_data["event_time"],)
+                event.date = datetime.combine(
+                    form.cleaned_data["event_date"], form.cleaned_data["event_time"]
+                )
                 event.save()
 
             new_ticket = Ticket()
