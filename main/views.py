@@ -109,6 +109,8 @@ def signup_view(request):
         username=request.POST["username"],
         password=request.POST["password"],
         email=request.POST["email"],
+        first_name=request.POST["first name"],
+        last_name=request.POST["last name"],
     )
     login(request, user)
     return redirect("/")
