@@ -6,7 +6,12 @@
 {% block styles %} {% endblock %}
 
 {% block navbar %}
-<ul class="nav navbar-nav ml-auto"><a href="/logout"><button class="btn btn-light">Logout</button></a></ul>
+<ul class="nav navbar-nav ml-auto">
+    <a class="navbar-brand" href="/profile">
+        <img src="{% static 'css/person-circle.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+    </a>
+    <a href="/logout"><button class="btn btn-light">Logout</button></a>
+</ul>
 {% endblock %}
 
 {% block body %}
@@ -20,9 +25,6 @@
         <form action="#">
             <input type="submit" class="btn btn-primary active" aria-current="page" value="Sell tickets" />
         </form>
-        <form action="/profile">
-            <input type="submit" class="btn btn-primary" aria-current="page" value="Profile" />
-          </form>
     </div>
 </div>
 
