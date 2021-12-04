@@ -2,6 +2,10 @@
   font-family: "Avenir", "Roboto", sans-serif;
 }
 
+.path {
+  fill: white;
+}
+
 .wrapper {
   margin: auto;
   width: 50%;
