@@ -28,18 +28,29 @@
     </div>
 </div>
 
+
 <div class="form">
-    <h2 class="text-center text-muted">Profile</h2>
+    <hr class="mb-4">
+    <h2 class="text-center text-muted"><i class="bi bi-person-circle"></i> Profile</h2>
     <hr class="mb-4">
     <img src="{% static 'css/ticket.svg' %}" width="100" height="100" class="mx-auto d-block" alt="">
     <h1 class="text-center">{{ user.first_name }} {{ user.last_name }}</h1>
     <h3 class="text-center">{{ user.email }}</h3>
-    <h3 class="text-center" contentEditable="true">phone number</h3>
-    {% for ticket in user.tickets %}
-    Selling {{ ticket.quantity }} {{ ticket.event }} ticket(s) at ${{ticket.price}} each<br />
-    {% endfor %}
-
-
+    <h3 class="text-center">314 159 2653</h3>
+    <hr class="mb-4">
+    <h2 class="text-center text-muted"><i class ="bi bi-ticket-perforated"></i> Your Tickets</h2>
+    <hr class="mb-4">
+    <div class="shadow-sm bg-white rounded">
+        {% for ticket in user.tickets %}
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ ticket.event }}</h5>
+            <h5 class="text-muted">price: ${{ticket.price}}</h5>
+          </div>
+          <p class="mb-1">quantity: {{ticket.quantity}}</p>
+        </a>
+        {% endfor %}
+    </div>
 
 </div>
 
