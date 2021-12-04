@@ -113,6 +113,7 @@ def signup_view(request):
         email=request.POST["email"],
         first_name=request.POST["first name"],
         last_name=request.POST["last name"],
+        phone_number=request.POST["phone number"],
     )
     login(request, user)
     return redirect("/")
