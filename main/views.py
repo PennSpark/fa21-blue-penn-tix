@@ -12,6 +12,7 @@ from django.utils.timezone import make_aware
 def sell_view(request):
     if not request.user.is_authenticated:
         return render(request, "splash.html")
+        
     if request.method == "POST":
         form = NewTicketForm(request.POST)
         if form.is_valid():
@@ -35,11 +36,10 @@ def sell_view(request):
                 )
                 event.save()
 
-            new_ticket = Ticket()
+            new_ticket = Ticket(seller=request.user)
             new_ticket.event = event
             new_ticket.price = form.cleaned_data["price"]
             new_ticket.quantity = form.cleaned_data["quantity"]
-            new_ticket.seller = request.user
             new_ticket.save()
             ##TODO: add something here that gives confirmation your ticket has been posted
             return HttpResponseRedirect("/")
