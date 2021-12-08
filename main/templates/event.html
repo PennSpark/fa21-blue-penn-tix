@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Signed-In Homepage {% endblock %}
+{% block title %} {{ event.name }} {% endblock %}
 
 {% block styles %} {% endblock %}
 
@@ -19,10 +19,13 @@
 <div class="main">
     <h1>{{event.name}}</h1>
     <h3>{{ event.date }}</h3>
+    <br />
     {% for ticket in tickets %}
     <div>
-        <strong>{{ ticket.seller }}</strong> is selling <strong>{{ ticket.quantity }}</strong> ticket(s) for $<strong>{{ ticket.price }}</strong>/ea<br />
-        <a href="sellticket?id={{ticket.id}}&event_id={{event.id}}"><button>buy ticket</button></a>
+        <strong><a href="/user?username={{ticket.seller.username}}">{{ ticket.seller }}</a></strong> is selling <strong>{{ ticket.quantity }}</strong> ticket(s) for $<strong>{{ ticket.price }}</strong>/ea
+        <!-- TODO: V uncomment below if u want a button that says "message seller" – i removed bc u can just click seller username^ but depends
+                    how u guys want the user flow to look like -->
+        <!-- <a href="/user?username={{ticket.seller.username}}"><button>message seller</button></a> -->
         <hr />
     </div> 
     {% endfor %}

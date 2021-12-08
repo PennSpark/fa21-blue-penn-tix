@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ user.username }} {% endblock %}
+
+{% block styles %} {% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav ml-auto">
+  <a class="navbar-brand" href="/profile">
+    <img src="{% static 'css/person-circle.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+  </a>
+  <a href="/logout"><button class="btn btn-light">Logout</button></a>
+</ul>
+{% endblock %}
+
+{% block body %}
+
+<div class="main">
+    <h1>{{ user.username }}</h1>
+    <h3>{{ user.email }}</h3>
+    <br />
+    <h4>{{ user.username }} is selling the following tickets:</h4><br/>
+    {% for ticket in tickets %}
+    <div>
+        <strong><a href="/event/?id={{ticket.event.id}}">{{ ticket.event }}</a></strong>: <strong>{{ ticket.quantity }}</strong> ticket(s) for $<strong>{{ ticket.price }}</strong>/ea<br />
+        <hr />
+    </div> 
+    {% endfor %}
+</div>
+{% endblock %}

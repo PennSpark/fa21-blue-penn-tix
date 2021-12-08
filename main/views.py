@@ -124,6 +124,12 @@ def main_view(request):
     return render(request, "main.html", {"events": events})
 
 
+def user_profile_view(request):
+    user = User.objects.get(username=request.GET["username"])
+    tickets = Ticket.objects.all().order_by("event").filter(seller=user)
+    return render(request, "user.html", {"user": user, "tickets": tickets})
+
+
 def delete_view(request):
     ticket = Ticket.objects.get(id=request.GET["id"])
     if ticket.seller == request.user:
@@ -147,15 +153,24 @@ def login_view(request):
 
 
 def signup_view(request):
-    user = User.objects.create_user(
-        username=request.POST["username"],
-        password=request.POST["password"],
-        email=request.POST["email"],
-        first_name=request.POST["first name"],
-        last_name=request.POST["last name"],
-    )
-    login(request, user)
-    return redirect("/")
+    username = request.POST["username"]
+    password=request.POST["password"]
+    email=request.POST["email"]
+    first_name=request.POST["first name"]
+    last_name=request.POST["last name"]
+
+    if len(username) > 0 and len(password) > 0 and len(email) > 0 and len(first_name) > 0 and len(last_name) > 0:
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            email=email,
+            first_name=first_name,
+            last_name=last_name
+        )
+        login(request, user)
+        return redirect("/")
+    else:
+        return redirect("/splash?error=SignupError")
 
 
 def logout_view(request):
