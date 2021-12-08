@@ -52,10 +52,21 @@ def sell_view(request):
 def profile_view(request):
     if not request.user.is_authenticated:
         return render(request, "splash.html")
+
     user = request.user
+    tickets = Ticket.objects.all().order_by("price").filter(seller=user)
+    user.tickets = tickets
 
     return render(request, "profile.html", {"user": user})
 
+def sell_ticket(request):
+    ticket = Ticket.objects.get(id=request.GET['id'])
+    ticket.quantity -= 1
+    ticket.save()
+    if ticket.quantity <= 0:
+        ticket.delete()
+
+    return redirect("/profile.html")
 
 def add_ticket_view(request):
     if request.method == "POST":
