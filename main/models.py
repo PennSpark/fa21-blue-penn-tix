@@ -1,6 +1,18 @@
-from django.db import models
+
 from django.contrib.auth.models import User
 
+from django.db import models
+
+
+class User(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    # reputation
+    def __str__(self):
+        return self.username
 
 class Event(models.Model):
     name = models.CharField(max_length=100)
@@ -11,7 +23,6 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Ticket(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -25,13 +36,4 @@ class Ticket(models.Model):
         return self.event.name
 
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=100)
-    # reputation
-    def __str__(self):
-        return self.username
+

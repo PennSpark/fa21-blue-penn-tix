@@ -54,8 +54,8 @@ def profile_view(request):
         return render(request, "splash.html")
 
     user = request.user
-    tickets = Ticket.objects.all().order_by("price").filter(seller=user)
-    user.tickets = tickets
+    #tickets = Ticket.objects.all().order_by("price").filter(seller=user)
+    #user.tickets = tickets
 
     return render(request, "profile.html", {"user": user})
 
