@@ -10,6 +10,7 @@ class Event(models.Model):
     location = models.CharField(max_length=100, blank=True)
     date = models.DateTimeField()
     num_tickets = models.IntegerField(default=0)
+    lowest_ticket_price = models.FloatField(default=-1)
     # TODO: add num_tickets
 
     def __str__(self):
