@@ -1,2 +1,1 @@
-heroku buildpacks:clear
-heroku buildpacks:add --index heroku/python
+web: gunicorn main:server
