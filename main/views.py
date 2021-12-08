@@ -61,10 +61,11 @@ def sell_ticket(request):
     ticket = Ticket.objects.get(id=request.GET['id'])
     ticket.quantity -= 1
     ticket.save()
+    print(ticket.quantity)
     if ticket.quantity <= 0:
         ticket.delete()
 
-    return redirect("/profile.html")
+    return redirect("/profile")
 
 def add_ticket_view(request):
     if request.method == "POST":
