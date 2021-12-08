@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Signed-In Homepage {% endblock %}
+
+{% block styles %} {% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav ml-auto">
+  <a class="navbar-brand" href="/profile">
+    <img src="{% static 'css/person-circle.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+  </a>
+  <a href="/logout"><button class="btn btn-light">Logout</button></a>
+</ul>
+{% endblock %}
+
+{% block body %}
+
+<div class="main">
+    <h1>{{event.name}}</h1>
+    {% for ticket in tickets %}
+        Selling {{ ticket.quantity }} {{ ticket.event }} ticket(s)<br />
+        {{ticket.event.date}} at {{ticket.event.time}}<br />
+        ${{ ticket.price }}<br />
+        <hr />
+    {% endfor %}
+</div>
+{% endblock %}

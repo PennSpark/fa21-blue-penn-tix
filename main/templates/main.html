@@ -38,16 +38,15 @@
     <h5>{{ date.grouper }}</h5>
     <div class="shadow-sm bg-white rounded">
       {% for event in date.list %}
-      <a href="/profile" class="list-group-item list-group-item-action">
+      <a href="/event?id={{event.id}}" class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{ event.name }}</h5>
           <small class="text-muted">Starting at $3</small>
+          <!-- TODO fix this hardcode ^ -->
         </div>
         <div class="d-flex w-100 justify-content-between">
           <p class="mb-1">{{ event.date.time }}</p>
-          <form action="https://google.com">
-            <input type="submit" value="Buy" />
-          </form>
+          <p>{{ event.num_tickets }} tickets being sold</p>
         </div>
         <small class="text-muted">{{ event.description }}</small>
       </a>

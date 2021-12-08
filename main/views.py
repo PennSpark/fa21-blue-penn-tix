@@ -36,10 +36,14 @@ def sell_view(request):
                 )
                 event.save()
 
+            event.num_tickets += form.cleaned_data["quantity"]
+            event.save()
+
             new_ticket = Ticket(seller=request.user)
             new_ticket.event = event
             new_ticket.price = form.cleaned_data["price"]
             new_ticket.quantity = form.cleaned_data["quantity"]
+            new_ticket.event = event
             new_ticket.save()
             ##TODO: add something here that gives confirmation your ticket has been posted
             return HttpResponseRedirect("/")
@@ -61,6 +65,8 @@ def sell_ticket(request):
     ticket = Ticket.objects.get(id=request.GET['id'])
     ticket.quantity -= 1
     ticket.save()
+    ticket.event.num_tickets -= 1
+    ticket.event.save()
     print(ticket.quantity)
     if ticket.quantity <= 0:
         ticket.delete()
@@ -77,10 +83,13 @@ def add_ticket_view(request):
 
     return redirect("/")  # change this redirect
 
+def event_view(request):
+    event = Event.objects.get(id=request.GET["id"])
+    tickets = Ticket.objects.all().order_by("price").filter(event=event)
+    return render(request, "event.html", {"event": event, "tickets": tickets})
 
 def tickets_view(request):
     tickets = Ticket.objects.all().order_by("price")
-
     return render(request, "tickets.html", {"tickets": tickets})
 
 

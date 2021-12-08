@@ -9,6 +9,7 @@ class Event(models.Model):
     description = models.TextField(max_length=300, blank=True)
     location = models.CharField(max_length=100, blank=True)
     date = models.DateTimeField()
+    num_tickets = models.IntegerField(default=0)
     # TODO: add num_tickets
 
     def __str__(self):
