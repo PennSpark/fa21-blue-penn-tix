@@ -18,11 +18,13 @@
 
 <div class="main">
     <h1>{{event.name}}</h1>
+    <h3>{{ event.date }}</h3>
     {% for ticket in tickets %}
-        Selling {{ ticket.quantity }} {{ ticket.event }} ticket(s)<br />
-        {{ticket.event.date}} at {{ticket.event.time}}<br />
-        ${{ ticket.price }}<br />
+    <div>
+        <strong>{{ ticket.seller }}</strong> is selling <strong>{{ ticket.quantity }}</strong> ticket(s) for $<strong>{{ ticket.price }}</strong>/ea<br />
+        <a href="sellticket?id={{ticket.id}}&event_id={{event.id}}"><button>buy ticket</button></a>
         <hr />
+    </div> 
     {% endfor %}
 </div>
 {% endblock %}

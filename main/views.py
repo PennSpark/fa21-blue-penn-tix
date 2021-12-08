@@ -61,8 +61,20 @@ def profile_view(request):
     tickets = Ticket.objects.all().order_by("price").filter(seller=user)
     return render(request, "profile.html", {"user": user, "tickets": tickets})
 
-def sell_ticket(request):
-    ticket = Ticket.objects.get(id=request.GET['id'])
+
+def sell_ticket_from_event_view(request):
+    sell_ticket(request.GET['id'])
+    event_id = request.GET['event_id']
+    return redirect("/event?id=" + event_id)
+
+def sell_ticket_from_profile_view(request):
+    sell_ticket(request.GET['id'])
+    return redirect("/profile")
+
+def sell_ticket(id):
+    ticket = Ticket.objects.get(id=id)
+    print("TICKET IS")
+    print(ticket)
     ticket.quantity -= 1
     ticket.save()
     ticket.event.num_tickets -= 1
@@ -70,8 +82,6 @@ def sell_ticket(request):
     print(ticket.quantity)
     if ticket.quantity <= 0:
         ticket.delete()
-
-    return redirect("/profile")
 
 def add_ticket_view(request):
     if request.method == "POST":
@@ -98,6 +108,11 @@ def main_view(request):
         return render(request, "splash.html")
 
     events = Event.objects.all().order_by("date")
+    for event in events:
+        if event.num_tickets <= 0:
+            event.delete()
+    events = Event.objects.all().order_by("date")
+    
     return render(request, "main.html", {"events": events})
 
 
