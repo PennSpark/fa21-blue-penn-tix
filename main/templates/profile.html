@@ -40,7 +40,7 @@
     <h2 class="text-center text-muted"><i class ="bi bi-ticket-perforated"></i> Your Tickets</h2>
     <hr class="mb-4">
     <div class="shadow-sm bg-white rounded">
-        {% for ticket in user.tickets %}
+        {% for ticket in tickets %}
         <a href="#" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{ ticket.event }}</h5>

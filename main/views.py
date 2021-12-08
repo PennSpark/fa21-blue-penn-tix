@@ -12,7 +12,7 @@ from django.utils.timezone import make_aware
 def sell_view(request):
     if not request.user.is_authenticated:
         return render(request, "splash.html")
-        
+
     if request.method == "POST":
         form = NewTicketForm(request.POST)
         if form.is_valid():
@@ -54,10 +54,8 @@ def profile_view(request):
         return render(request, "splash.html")
 
     user = request.user
-    #tickets = Ticket.objects.all().order_by("price").filter(seller=user)
-    #user.tickets = tickets
-
-    return render(request, "profile.html", {"user": user})
+    tickets = Ticket.objects.all().order_by("price").filter(seller=user)
+    return render(request, "profile.html", {"user": user, "tickets": tickets})
 
 def sell_ticket(request):
     ticket = Ticket.objects.get(id=request.GET['id'])
