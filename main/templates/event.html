@@ -8,7 +8,7 @@
 {% block navbar %}
 <ul class="nav navbar-nav ml-auto">
   <a class="navbar-brand" href="/profile">
-    <img src="{% static 'css/person-circle.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+    <i class="bi bi-person-circle"></i>
   </a>
   <a href="/logout"><button class="btn btn-light">Logout</button></a>
 </ul>
@@ -17,16 +17,16 @@
 {% block body %}
 
 <div class="main">
-    <h1>{{event.name}}</h1>
-    <h3>{{ event.date }}</h3>
+    <h1 class="text-center">{{event.name}}</h1>
+    <h3 class="text-center text-muted">{{ event.date }}</h3>
     <br />
     {% for ticket in tickets %}
     <div>
-        <strong><a href="/user?username={{ticket.seller.username}}">{{ ticket.seller }}</a></strong> is selling <strong>{{ ticket.quantity }}</strong> ticket(s) for $<strong>{{ ticket.price }}</strong>/ea
-        <!-- TODO: V uncomment below if u want a button that says "message seller" – i removed bc u can just click seller username^ but depends
-                    how u guys want the user flow to look like -->
-        <!-- <a href="/user?username={{ticket.seller.username}}"><button>message seller</button></a> -->
-        <hr />
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1"><strong><a href="/user?username={{ticket.seller.username}}">{{ ticket.seller }}</a></strong> is selling <strong>{{ ticket.quantity }}</strong> ticket(s) for $<strong>{{ ticket.price }}</strong>/ea</h5>
+        <a href="/user?username={{ticket.seller.username}}"><button class="btn btn-primary btn-sm">message seller</button></a> 
+      </div>
+      <hr />
     </div> 
     {% endfor %}
 </div>
