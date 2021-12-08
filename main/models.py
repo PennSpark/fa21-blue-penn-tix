@@ -11,7 +11,6 @@ class Event(models.Model):
     date = models.DateTimeField()
     num_tickets = models.IntegerField(default=0)
     lowest_ticket_price = models.FloatField(default=-1)
-    # TODO: add num_tickets
 
     def __str__(self):
         return self.name
