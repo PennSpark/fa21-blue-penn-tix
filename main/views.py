@@ -35,7 +35,10 @@ def sell_view(request):
                         form.cleaned_data["event_date"], form.cleaned_data["event_time"]
                     )
                 )
-                event.save()
+                if timezone.now() < event.date:
+                    event.save()
+                else:
+                    return
 
             event.num_tickets += form.cleaned_data["quantity"]
             if (
@@ -43,7 +46,10 @@ def sell_view(request):
                 or event.lowest_ticket_price < 0
             ):
                 event.lowest_ticket_price = form.cleaned_data["price"]
-            event.save()
+            if timezone.now() < event.date:
+                event.save()
+            else:
+                return
 
             new_ticket = Ticket(seller=request.user)
             new_ticket.event = event
