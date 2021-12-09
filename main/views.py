@@ -37,17 +37,21 @@ def sell_view(request):
                 event.save()
 
             event.num_tickets += form.cleaned_data["quantity"]
-            if form.cleaned_data["price"] < event.lowest_ticket_price or event.lowest_ticket_price < 0:
+            if (
+                form.cleaned_data["price"] < event.lowest_ticket_price
+                or event.lowest_ticket_price < 0
+            ):
                 event.lowest_ticket_price = form.cleaned_data["price"]
             event.save()
 
             new_ticket = Ticket(seller=request.user)
             new_ticket.event = event
             new_ticket.price = form.cleaned_data["price"]
-            
+
             new_ticket.quantity = form.cleaned_data["quantity"]
             new_ticket.event = event
-            new_ticket.save()
+            if datetime.now() < event.date:
+                new_ticket.save()
             ##TODO: add something here that gives confirmation your ticket has been posted
             return HttpResponseRedirect("/")
     else:
@@ -66,13 +70,15 @@ def profile_view(request):
 
 
 def sell_ticket_from_event_view(request):
-    sell_ticket(request.GET['id'])
-    event_id = request.GET['event_id']
+    sell_ticket(request.GET["id"])
+    event_id = request.GET["event_id"]
     return redirect("/event?id=" + event_id)
 
+
 def sell_ticket_from_profile_view(request):
-    sell_ticket(request.GET['id'])
+    sell_ticket(request.GET["id"])
     return redirect("/profile")
+
 
 def sell_ticket(id):
     ticket = Ticket.objects.get(id=id)
@@ -84,12 +90,11 @@ def sell_ticket(id):
     print(ticket.quantity)
     if ticket.quantity <= 0:
         ticket.delete()
-        tickets = Ticket.objects.all().order_by("price").filter(event=event)
-        print("got here:")
-        print(tickets)
+        tickets = Ticket.objects.all().order_by("price").filter(event=event))
         if len(tickets) > 0:
             ticket.event.lowest_ticket_price = tickets[0].price
             ticket.event.save()
+
 
 def add_ticket_view(request):
     if request.method == "POST":
@@ -97,14 +102,17 @@ def add_ticket_view(request):
         ticket = Ticket.objects.create(
             event=event, seller=request.user, price=request.POST["price"], sold=0
         )
-        ticket.save()
+        if ticket.price > 0:
+            ticket.save()
 
     return redirect("/")  # change this redirect
+
 
 def event_view(request):
     event = Event.objects.get(id=request.GET["id"])
     tickets = Ticket.objects.all().order_by("price").filter(event=event)
     return render(request, "event.html", {"event": event, "tickets": tickets})
+
 
 def tickets_view(request):
     tickets = Ticket.objects.all().order_by("price")
@@ -154,18 +162,24 @@ def login_view(request):
 
 def signup_view(request):
     username = request.POST["username"]
-    password=request.POST["password"]
-    email=request.POST["email"]
-    first_name=request.POST["first name"]
-    last_name=request.POST["last name"]
+    password = request.POST["password"]
+    email = request.POST["email"]
+    first_name = request.POST["first name"]
+    last_name = request.POST["last name"]
 
-    if len(username) > 0 and len(password) > 0 and len(email) > 0 and len(first_name) > 0 and len(last_name) > 0:
+    if (
+        len(username) > 0
+        and len(password) > 0
+        and len(email) > 0
+        and len(first_name) > 0
+        and len(last_name) > 0
+    ):
         user = User.objects.create_user(
             username=username,
             password=password,
             email=email,
             first_name=first_name,
-            last_name=last_name
+            last_name=last_name,
         )
         login(request, user)
         return redirect("/")
