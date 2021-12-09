@@ -90,7 +90,7 @@ def sell_ticket(id):
     print(ticket.quantity)
     if ticket.quantity <= 0:
         ticket.delete()
-        tickets = Ticket.objects.all().order_by("price").filter(event=event))
+        tickets = Ticket.objects.all().order_by("price").filter(event=event)
         if len(tickets) > 0:
             ticket.event.lowest_ticket_price = tickets[0].price
             ticket.event.save()
