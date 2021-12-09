@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from .forms import NewTicketForm
 from datetime import datetime
 from django.utils.timezone import make_aware
+from django.utils import timezone
 
 
 def sell_view(request):
@@ -50,7 +51,7 @@ def sell_view(request):
 
             new_ticket.quantity = form.cleaned_data["quantity"]
             new_ticket.event = event
-            if datetime.now() < event.date:
+            if timezone.now() < event.date:
                 new_ticket.save()
             ##TODO: add something here that gives confirmation your ticket has been posted
             return HttpResponseRedirect("/")
