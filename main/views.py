@@ -38,7 +38,7 @@ def sell_view(request):
                 if timezone.now() < event.date:
                     event.save()
                 else:
-                    return
+                    return HttpResponseRedirect("/")
 
             event.num_tickets += form.cleaned_data["quantity"]
             if (
@@ -49,7 +49,7 @@ def sell_view(request):
             if timezone.now() < event.date:
                 event.save()
             else:
-                return
+                return HttpResponseRedirect("/")
 
             new_ticket = Ticket(seller=request.user)
             new_ticket.event = event
